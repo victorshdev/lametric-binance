@@ -13,7 +13,7 @@ class Frame
 
     private float $start = 0.0;
     private float $end = 0.0;
-    private string $current = '';
+    private int $current = 0;
     private string $unit = '$';
 
     public function getIcon(): string
@@ -49,14 +49,25 @@ class Frame
         return $this;
     }
 
-    public function getCurrent(): string
+    public function getCurrent(): int
     {
         return $this->current;
     }
 
-    public function setCurrent(string $current): Frame
+    public function setCurrent(int $current): Frame
     {
         $this->current = $current;
+        return $this;
+    }
+
+    public function getUnit(): string
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(string $unit): Frame
+    {
+        $this->unit = $unit;
         return $this;
     }
 
@@ -68,6 +79,7 @@ class Frame
                 'start' => $this->getStart(),
                 'end' => $this->getEnd(),
                 'current' => $this->getCurrent(),
+                'unit' => $this->getUnit()
             ],
         ];
     }
