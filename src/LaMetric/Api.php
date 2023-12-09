@@ -37,7 +37,7 @@ class Api
             }
         }
 
-        return $this->mapData(number_format($totalBalance, 2), $parameters);
+        return $this->mapData(number_format($totalBalance, 2, '.', ''), $parameters);
     }
 
     private function mapData(string $totalBalance, array $parameters = []): FrameCollection

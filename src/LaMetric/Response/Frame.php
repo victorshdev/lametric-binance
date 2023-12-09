@@ -63,6 +63,7 @@ class Frame
     public function toArray(): array
     {
         return [
+            'icon' => $this->getIcon(),
             'goalData' => [
                 'start' => $this->getStart(),
                 'end' => $this->getEnd(),
