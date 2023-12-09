@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace LaMetric;
 
 use Binance\API as BinanceAPI;
-use LaMetric\Helper\IconHelper;
-use LaMetric\Helper\PriceHelper;
-use LaMetric\Helper\SymbolHelper;
 use LaMetric\Response\Frame;
 use LaMetric\Response\FrameCollection;
 
@@ -24,7 +21,7 @@ class Api
 
         $account = $api->account();
 
-        $wallets = [];
+        $totalBalance = 0;
 
         if (isset($account['balances'])) {
             foreach ($account['balances'] as $balance) {
@@ -33,45 +30,27 @@ class Api
                         $asset = $prices[$balance['asset']];
 
                         $binanceBalance = $balance['free'] + $balance['locked'];
-                        if ($parameters['separate-assets'] === 'false') {
-                            if (!isset($wallets['ALL'])) {
-                                $wallets['ALL'] = 0;
-                            }
-                            $wallets['ALL'] += $asset['price'] * $binanceBalance;
-                        } else {
-                            $price = $asset['price'] * $binanceBalance;
-                            if (($price > 1 && $parameters['hide-small-assets'] === 'true') || $parameters['hide-small-assets'] === 'false') {
-                                $wallets[$balance['asset']] = $price;
-                            }
-                        }
+
+                        $totalBalance += $asset['price'] * $binanceBalance;
                     }
                 }
             }
         }
 
-        foreach ($wallets as &$wallet) {
-
-            $wallet = match ($parameters['position']) {
-                'hide' => PriceHelper::round($wallet),
-                'after' => PriceHelper::round($wallet) . SymbolHelper::getSymbol($parameters['currency']),
-                default => SymbolHelper::getSymbol($parameters['currency']) . PriceHelper::round($wallet),
-            };
-        }
-
-        return $this->mapData($wallets);
+        return $this->mapData(number_format($totalBalance, 2), $parameters);
     }
 
-    private function mapData(array $data = []): FrameCollection
+    private function mapData(string $totalBalance, array $parameters = []): FrameCollection
     {
         $frameCollection = new FrameCollection();
 
-        foreach ($data as $key => $wallet) {
-            $frame = new Frame();
-            $frame->setText((string) $wallet);
-            $frame->setIcon(IconHelper::getIcon($key));
+        $frame = new Frame();
+        $frame->setStart(floatval($parameters['start']));
+        $frame->setEnd(floatval($parameters['end']));
+        $frame->setCurrent($totalBalance);
+        $frame->setIcon('8442');
 
-            $frameCollection->addFrame($frame);
-        }
+        $frameCollection->addFrame($frame);
 
         return $frameCollection;
     }

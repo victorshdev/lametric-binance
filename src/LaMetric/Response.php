@@ -50,11 +50,7 @@ class Response
 
         /** @var Frame $frame */
         foreach ($frameCollection->getFrames() as $key => $frame) {
-            $response['frames'][] = [
-                'index' => $key,
-                'icon'  => $frame->getIcon() !== '' ? $frame->getIcon() : null,
-                'text'  => $frame->getText(),
-            ];
+            $response['frames'][] = $frame->toArray();
         }
 
         return $this->asJson($response);

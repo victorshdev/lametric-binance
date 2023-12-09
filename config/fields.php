@@ -12,29 +12,11 @@ return [
         'type' => Field::TEXT_TYPE,
     ],
     [
-        'key'     => 'currency',
-        'type'    => Field::TEXT_TYPE,
-        'default' => 'USD',
+        'key'  => 'start',
+        'type' => Field::TEXT_TYPE,
     ],
     [
-        'key'     => 'position',
-        'type'    => Field::CHOICES_TYPE,
-        'choices' => [
-            'before',
-            'after',
-            'hide',
-        ],
-        'default' => 'before',
+        'key'  => 'end',
+        'type' => Field::TEXT_TYPE,
     ],
-    [
-        'key'     => 'separate-assets',
-        'type'    => Field::SWITCH_TYPE,
-        'default' => 'false',
-    ],
-    [
-        'key'     => 'hide-small-assets',
-        'type'    => Field::SWITCH_TYPE,
-        'default' => 'true',
-    ],
-
 ];

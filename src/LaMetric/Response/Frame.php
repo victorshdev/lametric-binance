@@ -9,42 +9,65 @@ class Frame
     /**
      * @var string
      */
-    private $text = '';
+    private string $icon = '';
 
-    /**
-     * @var string
-     */
-    private $icon = '';
+    private float $start = 0.0;
+    private float $end = 0.0;
+    private string $current = '';
+    private string $unit = '$';
 
-    /**
-     * @return string
-     */
-    public function getText(): string
-    {
-        return $this->text;
-    }
-
-    /**
-     * @param string $text
-     */
-    public function setText(string $text): void
-    {
-        $this->text = $text;
-    }
-
-    /**
-     * @return string
-     */
     public function getIcon(): string
     {
         return $this->icon;
     }
 
-    /**
-     * @param string $icon
-     */
-    public function setIcon(string $icon): void
+    public function setIcon(string $icon): Frame
     {
         $this->icon = $icon;
+        return $this;
+    }
+
+    public function getStart(): float
+    {
+        return $this->start;
+    }
+
+    public function setStart(float $start): Frame
+    {
+        $this->start = $start;
+        return $this;
+    }
+
+    public function getEnd(): float
+    {
+        return $this->end;
+    }
+
+    public function setEnd(float $end): Frame
+    {
+        $this->end = $end;
+        return $this;
+    }
+
+    public function getCurrent(): string
+    {
+        return $this->current;
+    }
+
+    public function setCurrent(string $current): Frame
+    {
+        $this->current = $current;
+        return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'goalData' => [
+                'start' => $this->getStart(),
+                'end' => $this->getEnd(),
+                'current' => $this->getCurrent(),
+            ],
+        ];
     }
 }
