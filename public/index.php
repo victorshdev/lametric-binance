@@ -19,7 +19,7 @@ try {
     $validator = new Validator($_GET);
     $validator->check($parameters);
 
-    $api    = new Api(new RedisClient());
+    $api    = new Api();
     $frames = $api->fetchData($validator->getData());
 
     echo $response->printData($frames);

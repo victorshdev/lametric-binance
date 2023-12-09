@@ -8,26 +8,19 @@ use Binance\API as BinanceAPI;
 use LaMetric\Helper\IconHelper;
 use LaMetric\Helper\PriceHelper;
 use LaMetric\Helper\SymbolHelper;
-use Predis\Client as RedisClient;
 use LaMetric\Response\Frame;
 use LaMetric\Response\FrameCollection;
 
 class Api
 {
-    public function __construct(
-        private RedisClient $redisClient,
-    ) {
-    }
-
     public function fetchData(array $parameters = []): FrameCollection
     {
-        $pricesFile = $this->redisClient->get('lametric:cryptocurrencies');
-        $prices = json_decode((string)$pricesFile, true);
-
         $api = new BinanceAPI(
             $parameters['api-key'],
             $parameters['secret-key']
         );
+
+        $prices = PriceSource::get($api);
 
         $account = $api->account();
 
@@ -57,7 +50,6 @@ class Api
         }
 
         foreach ($wallets as &$wallet) {
-            $wallet = $wallet * $this->convertToCurrency($parameters['currency']);
 
             $wallet = match ($parameters['position']) {
                 'hide' => PriceHelper::round($wallet),
@@ -82,21 +74,5 @@ class Api
         }
 
         return $frameCollection;
-    }
-
-    private function convertToCurrency(string $currencyToShow): float|int
-    {
-        if ($currencyToShow === 'USD') {
-            return 1;
-        }
-
-        $pricesFile = $this->redisClient->get('lametric:forex');
-        $rates = json_decode((string)$pricesFile, true);
-
-        if (!isset($rates[$currencyToShow])) {
-            throw new \Exception(sprintf('Currency %s not found', $currencyToShow));
-        }
-
-        return $rates[$currencyToShow];
     }
 }
