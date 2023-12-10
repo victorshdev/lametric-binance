@@ -50,11 +50,11 @@ class Api
         $frame->setIcon('8442');
         $frameCollection->addFrame($frame);
 
-        $percent = $totalBalance/floatval($parameters['end'])*100;
+        $percent = intval($totalBalance/floatval($parameters['end'])*100);
 
         $goal = new GoalFrame();
-        $goal->setStart(floatval($parameters['start']));
-        $goal->setEnd(floatval($parameters['end']));
+        $goal->setStart(0);
+        $goal->setEnd(100);
         $goal->setCurrent($percent);
         $goal->setIcon('8442');
         $frameCollection->addFrame($goal);
