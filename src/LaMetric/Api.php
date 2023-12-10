@@ -7,6 +7,7 @@ namespace LaMetric;
 use Binance\API as BinanceAPI;
 use LaMetric\Response\Frame;
 use LaMetric\Response\FrameCollection;
+use LaMetric\Response\GoalFrame;
 
 class Api
 {
@@ -45,12 +46,18 @@ class Api
         $frameCollection = new FrameCollection();
 
         $frame = new Frame();
-        $frame->setStart(floatval($parameters['start']));
-        $frame->setEnd(floatval($parameters['end']));
-        $frame->setCurrent($totalBalance);
+        $frame->setText($totalBalance . '$');
         $frame->setIcon('8442');
-
         $frameCollection->addFrame($frame);
+
+        $percent = $totalBalance/floatval($parameters['end'])*100;
+
+        $goal = new GoalFrame();
+        $goal->setStart(floatval($parameters['start']));
+        $goal->setEnd(floatval($parameters['end']));
+        $goal->setCurrent($percent);
+        $goal->setIcon('8442');
+        $frameCollection->addFrame($goal);
 
         return $frameCollection;
     }

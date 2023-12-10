@@ -14,7 +14,7 @@ class FrameCollection
     /**
      * @param Frame $frame
      */
-    public function addFrame(Frame $frame): void
+    public function addFrame(IFrame $frame): void
     {
         $this->frames[] = $frame;
     }

@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace LaMetric\Response;
 
-class Frame
+class Frame implements IFrame
 {
     /**
      * @var string
      */
     private string $icon = '';
 
-    private float $start = 0.0;
-    private float $end = 0.0;
-    private int $current = 0;
-    private string $unit = '$';
+    private string $text = '';
 
     public function getIcon(): string
     {
@@ -27,47 +24,14 @@ class Frame
         return $this;
     }
 
-    public function getStart(): float
+    public function getText(): string
     {
-        return $this->start;
+        return $this->text;
     }
 
-    public function setStart(float $start): Frame
+    public function setText(string $text): Frame
     {
-        $this->start = $start;
-        return $this;
-    }
-
-    public function getEnd(): float
-    {
-        return $this->end;
-    }
-
-    public function setEnd(float $end): Frame
-    {
-        $this->end = $end;
-        return $this;
-    }
-
-    public function getCurrent(): int
-    {
-        return $this->current;
-    }
-
-    public function setCurrent(int $current): Frame
-    {
-        $this->current = $current;
-        return $this;
-    }
-
-    public function getUnit(): string
-    {
-        return $this->unit;
-    }
-
-    public function setUnit(string $unit): Frame
-    {
-        $this->unit = $unit;
+        $this->text = $text;
         return $this;
     }
 
@@ -75,12 +39,7 @@ class Frame
     {
         return [
             'icon' => $this->getIcon(),
-            'goalData' => [
-                'start' => $this->getStart(),
-                'end' => $this->getEnd(),
-                'current' => $this->getCurrent(),
-                'unit' => $this->getUnit()
-            ],
+            'text' => $this->getText(),
         ];
     }
 }
