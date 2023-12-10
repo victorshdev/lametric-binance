@@ -12,6 +12,7 @@ class Frame implements IFrame
     private string $icon = '';
 
     private string $text = '';
+    private int $index = 0;
 
     public function getIcon(): string
     {
@@ -40,6 +41,18 @@ class Frame implements IFrame
         return [
             'icon' => $this->getIcon(),
             'text' => $this->getText(),
+            'index' => $this->getIndex(),
         ];
+    }
+
+    public function setIndex(int $index): static
+    {
+        $this->index = $index;
+        return $this;
+    }
+
+    public function getIndex(): int
+    {
+        return $this->index;
     }
 }

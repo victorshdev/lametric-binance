@@ -15,6 +15,7 @@ class GoalFrame implements IFrame
     private float $end = 0.0;
     private int $current = 0;
     private string $unit = '%';
+    private int $index = 0;
 
     public function getIcon(): string
     {
@@ -75,6 +76,7 @@ class GoalFrame implements IFrame
     {
         return [
             'icon' => $this->getIcon(),
+            'index' => $this->getIndex(),
             'goalData' => [
                 'start' => $this->getStart(),
                 'end' => $this->getEnd(),
@@ -82,5 +84,16 @@ class GoalFrame implements IFrame
                 'unit' => $this->getUnit()
             ],
         ];
+    }
+
+    public function setIndex(int $index): static
+    {
+        $this->index = $index;
+        return $this;
+    }
+
+    public function getIndex(): int
+    {
+        return $this->index;
     }
 }

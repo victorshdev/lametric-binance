@@ -16,7 +16,7 @@ class FrameCollection
      */
     public function addFrame(IFrame $frame): void
     {
-        $this->frames[] = $frame;
+        $this->frames[] = $frame->setIndex(count($this->frames));
     }
 
     /**
