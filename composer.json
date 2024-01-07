@@ -24,7 +24,7 @@
         }
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.3",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^6.5",
         "predis/predis": "^1.1",
