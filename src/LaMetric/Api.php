@@ -18,6 +18,8 @@ class Api
             $parameters['secret-key']
         );
 
+        $api->caOverride = true;
+
         $prices = PriceSource::get($api);
 
         $account = $api->account();
